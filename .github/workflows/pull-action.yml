@@ -1,0 +1,3 @@
+name: Check lint and test django application
+
+on: [pull]
