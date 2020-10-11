@@ -2,10 +2,11 @@ import datetime
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import permission_required
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Book, Author, BookInstance, Genre
 from .forms import RenewBookModelForm
@@ -113,3 +114,45 @@ def renew_book_librarian(request, pk):
     return render(request, 'books/book_renew_librarian.html', {'form': form, 'bookinst':book_inst})
 
 
+class AuthorCreate(PermissionRequiredMixin,CreateView):
+    model = Author
+    template_name ='authors/author_form.html'
+    permission_required = 'catalog.add_author'
+    fields = '__all__'
+    initial={'date_of_birth':'05/01/2018',}
+
+
+class AuthorUpdate(PermissionRequiredMixin,UpdateView):
+    model = Author
+    template_name ='authors/author_form.html'
+    permission_required = 'catalog.change_author'
+    fields = ['first_name','last_name','date_of_birth','date_of_death']
+
+
+class AuthorDelete(PermissionRequiredMixin,DeleteView):
+    model = Author
+    template_name ='authors/author_confirm_delete.html'
+    permission_required = 'catalog.delete_author'
+    success_url = reverse_lazy('authors')
+
+
+class BookCreate(PermissionRequiredMixin,CreateView):
+    model = Book
+    template_name ='books/book_form.html'
+    permission_required = 'catalog.add_book'
+    fields = '__all__'
+    initial={'status':'a',}
+
+
+class BookUpdate(PermissionRequiredMixin,UpdateView):
+    model = Book
+    template_name ='books/book_form.html'
+    permission_required = 'catalog.change_book'
+    fields = '__all__'
+
+
+class BookDelete(PermissionRequiredMixin,DeleteView):
+    model = Book
+    template_name ='books/book_confirm_delete.html'
+    permission_required = 'catalog.delete_book'
+    success_url = reverse_lazy('books')
