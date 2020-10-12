@@ -40,6 +40,7 @@ def index(request):
 
 class AuthorListView(ListView):
     model = Author
+    paginate_by = 10
     template_name = 'authors/author_list.html'
 
 
