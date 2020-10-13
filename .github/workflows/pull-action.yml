@@ -1,6 +1,9 @@
 name: Check lint and test django application
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 'feature/**'
 
 jobs:
     testing:
