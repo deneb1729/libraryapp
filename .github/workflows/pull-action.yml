@@ -30,6 +30,7 @@ jobs:
             - name: Runing tests
               run: |
                 pip install -r requirements.txt
+                python3 manage.py migrate
                 python3 manage.py test
             - name: Success message
               run: echo Successfully Testing.!
