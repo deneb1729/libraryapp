@@ -6,9 +6,9 @@ jobs:
     testing:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v2
             - name: set up python 3.7
-              uses: actions/setup-python@v1
+              uses: actions/setup-python@v2
               with:
                 python-version: 3.7
             - name: Lint with flake8
@@ -26,4 +26,10 @@ jobs:
                 # -----------------------
                 # checks with black
                 # -----------------------  
-                black .
+                black --diff .
+            - name: Runing tests
+              run: |
+                pip install -r requirements.txt
+                python3 manage.py test
+            - name: Success message
+              run: echo Successfully Testing.!
