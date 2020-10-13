@@ -1,9 +1,9 @@
-name: heroku deploy
+name: Check lint and test django application
 
 on:
-    push:
-        branches:
-            - master
+  push:
+    branches:
+      - 'feature/**'
 
 jobs:
     testing:
@@ -11,7 +11,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: set up python 3.7
-              uses: actions/setup-python@v1
+              uses: actions/setup-python@v2
               with:
                 python-version: 3.7
             - name: Lint with flake8
@@ -28,12 +28,12 @@ jobs:
                 flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
                 # -----------------------
                 # checks with black
-                # -----------------------  
-                black .
-            - uses: akhileshns/heroku-deploy@v3.4.6
-              with:
-                heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-                heroku_app_name: 'django-libraryapp'
-                heroku_email: ${{secrets.EMAIL_DEPLOY}}
+                # -----------------------
+                black --diff .
+            - name: Runing tests
+              run: |
+                pip install -r requirements.txt
+                python3 manage.py migrate
+                python3 manage.py test
             - name: Success message
-              run: echo Successfully Deploy.!
+              run: echo Successfully Testing.!

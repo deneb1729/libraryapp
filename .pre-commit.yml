@@ -1,0 +1,14 @@
+default_language_version:
+    python: python3.7
+repos:
+    - repo: https://github.com/ambv/black
+      rev: stable
+      hooks:
+        - id: black
+          stages: [commit]
+    - repo: https://github.com/pycqa/flake8
+      rev: 3.7.9
+      hooks:
+        - id: flake8
+          stages: [commit]
+          language: system
