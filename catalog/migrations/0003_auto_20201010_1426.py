@@ -12,6 +12,9 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="bookinstance",
-            options={"ordering": ["due_back"], "permissions": (("can_mark_returned", "Set book as returned"),)},
+            options={
+                "ordering": ["due_back"],
+                "permissions": (("can_mark_returned", "Set book as returned"),),
+            },
         ),
     ]
