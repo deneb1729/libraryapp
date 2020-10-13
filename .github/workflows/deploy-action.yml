@@ -6,7 +6,9 @@ on:
             - master
 
 jobs:
-    testing:
+
+    deploy:
+
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
