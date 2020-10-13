@@ -1,6 +1,6 @@
 name: Check lint and test django application
 
-on: [push]
+on: [pull_request]
 
 jobs:
     testing:

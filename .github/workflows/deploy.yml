@@ -3,7 +3,6 @@ name: heroku deploy
 on:
     push:
         branches:
-            - dev
             - master
 
 jobs:
@@ -35,6 +34,6 @@ jobs:
               with:
                 heroku_api_key: ${{secrets.HEROKU_API_KEY}}
                 heroku_app_name: 'django-libraryapp'
-                heroku_email: ${{EMAIL_DEPLOY}}
+                heroku_email: ${{secrets.EMAIL_DEPLOY}}
             - name: Success message
               run: echo Successfully Deploy.!
