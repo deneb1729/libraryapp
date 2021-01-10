@@ -49,6 +49,6 @@ jobs:
           run: |
             pip install -r requirements.txt
             python3 manage.py migrate
-            python3 manage.py test
+            python3 manage.py test --settings=base.settings_test -v 3
         - name: Success message
           run: echo finished working successfully!
