@@ -11,7 +11,6 @@ jobs:
   testing:
 
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:11-alpine
@@ -22,7 +21,6 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
         - uses: actions/checkout@v2
         - name: set up python 3.7
@@ -47,8 +45,24 @@ jobs:
             black --diff .
         - name: Runing tests
           run: |
+            # -----------------------
+            # unit test
+            # -----------------------
             pip install -r requirements.txt
             python3 manage.py migrate
             python3 manage.py test --settings=base.settings_test -v 3
         - name: Success message
           run: echo finished working successfully!
+
+  deploy:
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.4.6
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: 'django-libraryapp'
+          heroku_email: ${{secrets.EMAIL_DEPLOY}}
+      - name: Success message
+        run: echo Successfully Deploy.!
