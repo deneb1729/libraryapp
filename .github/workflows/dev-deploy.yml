@@ -63,8 +63,8 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           heroku container:login
-          heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} libraryapp-stage
-          heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} libraryapp-stage
+          heroku container:push -a django-libraryapp libraryapp-stage
+          heroku container:release -a django-libraryapp libraryapp-stage
 
   deploy:
     needs: lint-and-test
