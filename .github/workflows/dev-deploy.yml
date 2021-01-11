@@ -53,6 +53,19 @@ jobs:
         - name: Success message
           run: echo finished working successfully!
 
+  build:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push in heroku registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku container:login
+          heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} libraryapp-stage
+          heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} libraryapp-stage
+
   deploy:
     needs: lint-and-test
     runs-on: ubuntu-latest
