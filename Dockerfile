@@ -40,4 +40,4 @@ RUN addgroup -S john && adduser -S john -G john \
     && chown -R john:john $APP_HOME
 USER john
 
-ENTRYPOINT [ "gunicorn","ducasa.wsgi:application","--bind","0.0.0.0:8000","--log-level","info" ]
+ENTRYPOINT [ "gunicorn","base.wsgi:application","--bind","0.0.0.0:8000","--log-level","info" ]
